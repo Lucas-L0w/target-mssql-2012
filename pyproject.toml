@@ -37,4 +37,4 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 # CLI declaration
-target-mssql = 'target_mssql.target:Targetmssql.cli'
+target-mssql-2012 = 'target_mssql.target:Targetmssql.cli'
