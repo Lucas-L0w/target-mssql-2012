@@ -64,13 +64,13 @@ class mssqlConnector(SQLConnector):
             return config["sqlalchemy_url"]
 
         connection_url = sqlalchemy.engine.url.URL.create(
-            drivername="mssql+pymssql",
-            username=config["username"],
-            password=config["password"],
-            host=config["host"],
-            port=config["port"],
-            database=config["database"],
-        )
+        drivername="mssql+pymssql",
+        username=config.get("USERNAME"), 
+        password=config.get("PASSWORD"),  
+        host=config.get("HOST"),         
+        port=config.get("PORT"),          
+        database=config.get("DATABASE"),  
+            )
         return str(connection_url)
 
     def create_empty_table(
