@@ -1,6 +1,7 @@
 """ Attempt at making some standard Target Tests. """
 # flake8: noqa
 import io
+import os
 from contextlib import redirect_stdout
 from pathlib import Path
 from urllib.parse import quote
@@ -18,27 +19,25 @@ from target_mssql.tests.samples.sample_tap_countries.countries_tap import (
 @pytest.fixture()
 def mssql_config():
     return {
-        # "sqlalchemy_url": "mssql+pymssql://sa:p@55w0rd@localhost:1433/master",
-        "schema": "dbo",
-        "username": "sa",
-        "password": "P@55w0rd",
-        "host": "localhost",
-        "port": "1433",
-        "database": "master",
-        "table_prefix": "prfx_",
+        "schema": os.getenv("MSSQL_SCHEMA"),
+        "username": os.getenv("MSSQL_USERNAME"),
+        "password": os.getenv("MSSQL_PASSWORD"),
+        "host": os.getenv("MSSQL_HOST"),
+        "port": os.getenv("MSSQL_PORT"),
+        "database": os.getenv("MSSQL_DATABASE"),
+        "table_prefix": os.getenv("MSSQL_TABLE_PREFIX"),
     }
-
 
 @pytest.fixture()
 def mssql_dualconfig():
     return {
-        "sqlalchemy_url": f"mssql+pymssql://sa:P%4055w0rd@localhost:1433/master",
-        "schema": "dbo",
-        "username": "sa",
-        "password": "wrong_password",
-        "host": "localhost",
-        "port": "1433",
-        "database": "master",
+        "sqlalchemy_url": os.getenv("MSSQL_SQLALCHEMY_URL"),
+        "schema": os.getenv("MSSQL_SCHEMA"),
+        "username": os.getenv("MSSQL_USERNAME"),
+        "password": os.getenv("MSSQL_PASSWORD"),
+        "host": os.getenv("MSSQL_HOST"),
+        "port": os.getenv("MSSQL_PORT"),
+        "database": os.getenv("MSSQL_DATABASE"),
     }
 
 
@@ -147,6 +146,7 @@ def test_schema_no_properties(mssql_target):
 
 
 # TODO test that data is correct
+@pytest.mark.skipif(not os.getenv('LOCAL_SQL_SERVER'), reason="Requires local SQL Server")
 def test_schema_updates(mssql_target):
     base_config = {
         "schema": "dbo",
