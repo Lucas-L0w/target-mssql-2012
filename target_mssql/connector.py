@@ -67,34 +67,13 @@ class mssqlConnector(SQLConnector):
 
         connection_url = sqlalchemy.engine.url.URL.create(
             drivername="mssql+pymssql",
-            username=config["username"],
-            password=config["password"],
-            host=config["host"],
-            port=config["port"],
-            database=config["database"],
+            username=config["USERNAME"],
+            password=config["PASSWORD"],
+            host=config["HOST"],
+            port=config["PORT"],
+            database=config["DATABASE"],
         )
         return str(connection_url)
-
-# def get_sqlalchemy_url(self, connection_id: str) -> str:
-#     """Generates a SQLAlchemy URL for mssql using Airflow connection.
-
-#     Args:
-#         conn_id: The Airflow connection ID.
-#     """
-
-#     # Retrieve connection details from Airflow
-#     connection = BaseHook.get_connection(connection_id)
-
-#     # Construct the connection URL using details from the Airflow connection
-#     connection_url = sqlalchemy.engine.url.URL.create(
-#         drivername="mssql+pymssql",
-#         username=connection.login,
-#         password=connection.password,
-#         host=connection.host,
-#         port=connection.port or 1433,
-#         database=connection.schema,
-#     )
-#     return str(connection_url)
 
     def create_empty_table(
         self,
