@@ -75,7 +75,7 @@ class mssqlConnector(SQLConnector):
     #     )
     #     return str(connection_url)
 
-def get_sqlalchemy_url(self, conn_id: str) -> str:
+def get_sqlalchemy_url(self, connection_id: str) -> str:
     """Generates a SQLAlchemy URL for mssql using Airflow connection.
 
     Args:
@@ -83,7 +83,7 @@ def get_sqlalchemy_url(self, conn_id: str) -> str:
     """
 
     # Retrieve connection details from Airflow
-    connection = BaseHook.get_connection(conn_id)
+    connection = BaseHook.get_connection(connection_id)
 
     # Construct the connection URL using details from the Airflow connection
     connection_url = sqlalchemy.engine.url.URL.create(
