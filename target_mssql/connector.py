@@ -1,4 +1,6 @@
 from __future__ import annotations
+from airflow.hooks.base_hook import BaseHook
+
 
 from typing import Any, Dict, Iterable, List, Optional, cast
 
@@ -53,25 +55,46 @@ class mssqlConnector(SQLConnector):
             full_table_name=full_table_name, schema=schema, records=records
         )
 
-    def get_sqlalchemy_url(self, config: dict) -> str:
-        """Generates a SQLAlchemy URL for mssql.
+    # def get_sqlalchemy_url(self, config: dict) -> str:
+    #     """Generates a SQLAlchemy URL for mssql.
 
-        Args:
-            config: The configuration for the connector.
-        """
+    #     Args:
+    #         config: The configuration for the connector.
+    #     """
 
-        if config.get("sqlalchemy_url"):
-            return config["sqlalchemy_url"]
+    #     if config.get("sqlalchemy_url"):
+    #         return config["sqlalchemy_url"]
 
-        connection_url = sqlalchemy.engine.url.URL.create(
-            drivername="mssql+pymssql",
-            username=config.get("USERNAME"), 
-            password=config.get("PASSWORD"),  
-            host=config.get("HOST"),         
-            port=config.get("PORT"),          
-            database=config.get("DATABASE"),  
-        )
-        return str(connection_url)
+    #     connection_url = sqlalchemy.engine.url.URL.create(
+    #         drivername="mssql+pymssql",
+    #         username=config.get("USERNAME"), 
+    #         password=config.get("PASSWORD"),  
+    #         host=config.get("HOST"),         
+    #         port=config.get("PORT"),          
+    #         database=config.get("DATABASE"),  
+    #     )
+    #     return str(connection_url)
+
+def get_sqlalchemy_url(self, conn_id: str) -> str:
+    """Generates a SQLAlchemy URL for mssql using Airflow connection.
+
+    Args:
+        conn_id: The Airflow connection ID.
+    """
+
+    # Retrieve connection details from Airflow
+    connection = BaseHook.get_connection(conn_id)
+
+    # Construct the connection URL using details from the Airflow connection
+    connection_url = sqlalchemy.engine.url.URL.create(
+        drivername="mssql+pymssql",
+        username=connection.login,
+        password=connection.password,
+        host=connection.host,
+        port=connection.port or 1433,
+        database=connection.schema,
+    )
+    return str(connection_url)
 
     def create_empty_table(
         self,
