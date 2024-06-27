@@ -89,8 +89,8 @@ class mssqlConnector(SQLConnector):
             "database": conn.schema,
         }
 
-        sqlalchemy_url = f"mssql+pymssql://{config['username']}:{config['password']}@{config['host']}:{config['port']}/{config['database']}"
-        return str(sqlalchemy_url)
+        connection_url = f"mssql+pymssql://{config['username']}:{config['password']}@{config['host']}:{config['port']}/{config['database']}"
+        return str(connection_url)
 
     def create_empty_table(
         self,
