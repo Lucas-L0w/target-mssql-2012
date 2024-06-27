@@ -19,12 +19,12 @@ plugins:
     config:
       start_date: '2010-01-01T00:00:00Z'
     settings:
-    - name: USERNAME
-    - name: PASSWORD
+    - name: username
+    - name: password
       kind: password
     - name: start_date
       value: '2010-01-01T00:00:00Z'
-    - name: HOST
-    - name: PORT
-    - name: DATABASE
+    - name: host
+    - name: port
+    - name: database
     - name: default_target_schema
