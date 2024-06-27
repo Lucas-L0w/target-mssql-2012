@@ -68,6 +68,8 @@ class mssqlConnector(SQLConnector):
 
         if config.get("sqlalchemy_url"):
             return config["sqlalchemy_url"]
+        
+        print(config)
 
         connection_url = sqlalchemy.engine.url.URL.create(
             drivername="mssql+pymssql",
@@ -77,6 +79,9 @@ class mssqlConnector(SQLConnector):
             port=config["port"],
             database=config["database"],
         )
+
+        print(connection_url)
+        
         return str(connection_url)
     
     # def get_sqlalchemy_url():
