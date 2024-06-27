@@ -11,6 +11,9 @@ from sqlalchemy.dialects import mssql
 
 from airflow.hooks.base_hook import BaseHook
 from airflow.operators.python import PythonOperator
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 
@@ -69,7 +72,6 @@ class mssqlConnector(SQLConnector):
         if config.get("sqlalchemy_url"):
             return config["sqlalchemy_url"]
         
-        print(config)
 
         connection_url = sqlalchemy.engine.url.URL.create(
             drivername="mssql+pymssql",
@@ -80,7 +82,9 @@ class mssqlConnector(SQLConnector):
             database=config["database"],
         )
 
-        print(connection_url)
+        logger.info("FOOFOOFOOFOOFOO")
+        logger.info(config)
+        logger.info(connection_url)
         
         return str(connection_url)
     
