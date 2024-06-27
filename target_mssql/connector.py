@@ -71,7 +71,7 @@ class mssqlConnector(SQLConnector):
             password=config["password"],
             host=config["host"],
             port=config["port"],
-            database=config["database"],
+            database=config["schema"],
         )
         return str(connection_url)
 
