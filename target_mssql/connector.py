@@ -63,11 +63,11 @@ class mssqlConnector(SQLConnector):
 
         connection_url = sqlalchemy.engine.url.URL.create(
             drivername="mssql+pymssql",
-            username=config["login"],
+            username=config["username"],
             password=config["password"],
             host=config["host"],
             port=config["port"],
-            database=config["schema"],
+            database=config["database"],
         )
 
         return str(connection_url)
