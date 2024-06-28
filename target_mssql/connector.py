@@ -1,21 +1,10 @@
 from __future__ import annotations
-from airflow.hooks.base_hook import BaseHook
-
-
 from typing import Any, Dict, Iterable, List, Optional, cast
 
 import sqlalchemy
 from singer_sdk.connectors.sql import SQLConnector
 from singer_sdk.helpers._typing import get_datelike_property_type
 from sqlalchemy.dialects import mssql
-
-from airflow.hooks.base_hook import BaseHook
-from airflow.operators.python import PythonOperator
-import logging
-
-logger = logging.getLogger(__name__)
-
-
 
 class mssqlConnector(SQLConnector):
     """The connector for mssql.
@@ -72,6 +61,7 @@ class mssqlConnector(SQLConnector):
         if config.get("sqlalchemy_url"):
             return config["sqlalchemy_url"]
         
+        print(config)
 
         connection_url = sqlalchemy.engine.url.URL.create(
             drivername="mssql+pymssql",
@@ -82,24 +72,10 @@ class mssqlConnector(SQLConnector):
             database=config["database"],
         )
 
-        logger.info("FOOFOOFOOFOOFOO")
-        logger.info(config)
-        logger.info(connection_url)
-        
-        return str(connection_url)
-    
-    # def get_sqlalchemy_url():
-    #     conn = BaseHook.get_connection("MSSQL_prices_platform_airflow")
-    #     config = {
-    #         "username": conn.login,
-    #         "password": conn.password,
-    #         "host": conn.host,
-    #         "port": conn.port,
-    #         "database": conn.schema,
-    #     }
+        print(connection_url)
 
-    #     connection_url = f"mssql+pymssql://{config['username']}:{config['password']}@{config['host']}:{config['port']}/{config['database']}"
-    #     return str(connection_url)
+        return str(connection_url)
+
 
     def create_empty_table(
         self,
