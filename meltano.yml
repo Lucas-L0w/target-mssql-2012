@@ -1,10 +1,9 @@
 version: 1
+default_environment: cru
+send_anonymous_usage_stats: false
 environments:
-- name: dev
-- name: staging
-- name: prod
-default_environment: prod
-send_anonymous_usage_stats: true
+- name: cru
+
 project_id: "target-mssql-2012"
 plugins:
   extractors: []
