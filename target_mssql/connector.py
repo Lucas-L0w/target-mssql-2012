@@ -53,24 +53,20 @@ class mssqlConnector(SQLConnector):
 
     def get_sqlalchemy_url(self, config: dict) -> str:
         """Generates a SQLAlchemy URL for mssql.
-
         Args:
             config: The configuration for the connector.
         """
 
         if config.get("sqlalchemy_url"):
             return config["sqlalchemy_url"]
-        
-        conn_id = "MSSQL_prices_platform_airflow"
-        conn = BaseHook.get_connection(conn_id)
 
         connection_url = sqlalchemy.engine.url.URL.create(
             drivername="mssql+pymssql",
-            username=conn.login,
-            password=conn.password,
-            host=conn.host,
-            port=conn.port,
-            database=conn.schema,
+            username=config["username"],
+            password=config["password"],
+            host=config["host"],
+            port=config["port"],
+            database=config["database"],
         )
 
         return str(connection_url)
