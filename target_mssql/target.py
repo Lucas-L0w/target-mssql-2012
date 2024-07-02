@@ -11,7 +11,7 @@ from target_mssql.sinks import mssqlSink
 class Targetmssql(SQLTarget):
     """Singer target for mssql."""
 
-    name = "target-mssql-2012"
+    name = "target-mssql"
     config_jsonschema = th.PropertiesList(
         th.Property(
             "sqlalchemy_url",
