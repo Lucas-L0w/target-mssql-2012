@@ -21,7 +21,7 @@ if TYPE_CHECKING:
 class mssqlSink(SQLSink):
     """mssql target sink class."""
 
-    connector_class = mssqlConnector
+    # connector_class = mssqlConnector
 
     def __init__(
         self,
@@ -35,14 +35,14 @@ class mssqlSink(SQLSink):
         if self._config.get("table_prefix"):
             self.stream_name = self._config.get("table_prefix") + stream_name
 
-    # Copied purely to help with type hints
-    @property
-    def connector(self) -> mssqlConnector:
-        """The connector object.
-        Returns:
-            The connector object.
-        """
-        return self._connector
+    # # Copied purely to help with type hints
+    # @property
+    # def connector(self) -> mssqlConnector:
+    #     """The connector object.
+    #     Returns:
+    #         The connector object.
+    #     """
+    #     return self._connector
 
     @property
     def schema_name(self) -> Optional[str]:
